@@ -98,7 +98,7 @@ const DEFAULT_DATA: ResumeData = {
 
   design: {
     template: 'jobseeker',
-    primaryColor: '#7C3AED',
+    primaryColor: '#004A8D',
     fontFamily: 'Plus Jakarta Sans',
     fontSize: 'md',
     spacing: 'normal',

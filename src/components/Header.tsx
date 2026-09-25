@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { TabType } from '../types';
-import { FileText, Palette, Eye, Menu, X, Sparkles, ChevronRight } from 'lucide-react';
+import { FileText, Palette, Eye, Menu, X, Sparkles, ChevronRight, Zap } from 'lucide-react';
 
 interface HeaderProps {
   activeTab: TabType;
@@ -17,7 +17,7 @@ export default function Header({
   score,
   aiActive,
 }: HeaderProps) {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [sideMenuOpen, setSideMenuOpen] = useState(false);
 
   const tabs: { id: TabType; label: string; icon: React.ReactNode }[] = [
     { id: 'content', label: 'Conteúdo', icon: <FileText className="w-4 h-4" /> },
@@ -27,26 +27,29 @@ export default function Header({
 
   function handleTabSelect(tab: TabType) {
     onTabChange(tab);
-    setMobileMenuOpen(false);
+    setSideMenuOpen(false);
   }
 
   return (
     <header className="bg-white border-b border-gray-200 sticky top-0 z-30 shadow-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-2">
-        {/* Left: App Logo - Curriculinho */}
+        {/* Left: App Logo - Curriculinho (Senac Colors #004A8D & #F7941D) */}
         <div
-          className="flex items-center gap-2.5 shrink-0 cursor-pointer"
+          className="flex items-center gap-3 shrink-0 cursor-pointer"
           onClick={() => handleTabSelect('content')}
         >
-          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-purple-700 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-purple-500/20">
-            <Sparkles className="w-5 h-5" />
+          <div className="w-10 h-10 rounded-xl bg-[#004A8D] flex items-center justify-center text-white shadow-md shadow-[#004A8D]/20">
+            <Sparkles className="w-5 h-5 text-[#F7941D]" />
           </div>
           <div>
-            <div className="font-extrabold text-gray-900 text-lg leading-tight tracking-tight flex items-center gap-1.5">
+            <div className="font-extrabold text-[#004A8D] text-lg leading-tight tracking-tight flex items-center gap-1.5">
               Curriculinho
-              <span className="bg-purple-100 text-purple-700 text-[10px] px-1.5 py-0.5 rounded-full font-bold">
-                PRO
+              <span className="bg-[#F7941D]/15 text-[#F7941D] text-[10px] px-2 py-0.5 rounded-full font-bold border border-[#F7941D]/30">
+                T.D.S.
               </span>
+            </div>
+            <div className="text-[10px] text-gray-500 font-semibold leading-none">
+              Senac • Currículo Turbo
             </div>
           </div>
         </div>
@@ -64,12 +67,12 @@ export default function Header({
                 onClick={() => handleTabSelect(tab.id)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition-all duration-200 ${
                   isActive
-                    ? 'bg-white text-purple-700 shadow-sm font-bold'
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200/50'
+                    ? 'bg-[#004A8D] text-white shadow-sm font-bold'
+                    : 'text-gray-600 hover:text-[#004A8D] hover:bg-gray-200/50'
                 }`}
                 aria-current={isActive ? 'page' : undefined}
               >
-                <span className={isActive ? 'text-purple-600' : 'text-gray-400'}>
+                <span className={isActive ? 'text-[#F7941D]' : 'text-gray-400'}>
                   {tab.icon}
                 </span>
                 <span>{tab.label}</span>
@@ -78,18 +81,18 @@ export default function Header({
           })}
         </nav>
 
-        {/* Right Desktop: Central IA & Saúde Button */}
+        {/* Right Desktop: Central IA & Saúde Button (Senac Blue & Orange) */}
         <div className="hidden md:flex items-center gap-3">
           <button
             onClick={onOpenDrawer}
-            className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-purple-50 border border-purple-200/80 text-purple-700 hover:bg-purple-100 hover:border-purple-300 transition-all duration-200 group relative"
+            className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#004A8D]/10 border border-[#004A8D]/20 text-[#004A8D] hover:bg-[#004A8D] hover:text-white transition-all duration-200 group relative font-bold"
             title="Abrir Central de IA e Análise de Saúde"
           >
-            <Sparkles className="w-4 h-4 text-purple-600" />
-            <span className="text-xs font-bold">Central IA & Saúde</span>
+            <Zap className="w-4 h-4 text-[#F7941D] group-hover:scale-110 transition-transform" />
+            <span className="text-xs">Central IA & Saúde</span>
             <span
               className={`text-[11px] font-extrabold px-2 py-0.5 rounded-full text-white ${
-                score >= 80 ? 'bg-emerald-600' : score >= 60 ? 'bg-amber-500' : 'bg-red-500'
+                score >= 80 ? 'bg-emerald-600' : score >= 60 ? 'bg-[#F7941D]' : 'bg-red-500'
               }`}
             >
               {score}%
@@ -97,79 +100,130 @@ export default function Header({
           </button>
         </div>
 
-        {/* Right Mobile: Hamburger Menu Toggle Button */}
+        {/* Right Mobile: Hamburger Menu Button */}
         <div className="flex md:hidden items-center gap-2">
           {/* Quick Score indicator on mobile */}
           <span
             onClick={onOpenDrawer}
             className={`text-[11px] font-extrabold px-2.5 py-1 rounded-full text-white cursor-pointer ${
-              score >= 80 ? 'bg-emerald-600' : score >= 60 ? 'bg-amber-500' : 'bg-red-500'
+              score >= 80 ? 'bg-emerald-600' : score >= 60 ? 'bg-[#F7941D]' : 'bg-red-500'
             }`}
           >
             {score}%
           </span>
 
           <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-xl bg-purple-50 text-purple-700 border border-purple-200/80 hover:bg-purple-100 transition-colors"
-            aria-label="Abrir Menu Principal"
+            onClick={() => setSideMenuOpen(true)}
+            className="p-2 rounded-xl bg-[#004A8D]/10 text-[#004A8D] border border-[#004A8D]/20 hover:bg-[#004A8D] hover:text-white transition-colors"
+            aria-label="Abrir Menu Lateral Mobile"
           >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            <Menu className="w-5 h-5" />
           </button>
         </div>
       </div>
 
-      {/* MOBILE DROPDOWN MENU PANEL */}
-      {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100 p-4 space-y-3 shadow-lg animate-in slide-in-from-top-2 duration-200">
-          <div className="text-xs font-bold text-gray-400 uppercase tracking-wider px-1">
-            Navegação
-          </div>
-          <div className="space-y-1">
-            {tabs.map((tab) => {
-              const isActive = activeTab === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => handleTabSelect(tab.id)}
-                  className={`w-full flex items-center justify-between p-3 rounded-xl text-xs font-bold transition-all ${
-                    isActive
-                      ? 'bg-purple-50 text-purple-700 border border-purple-200'
-                      : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
-                  }`}
-                >
-                  <div className="flex items-center gap-2.5">
-                    <span className={isActive ? 'text-purple-600' : 'text-gray-500'}>
-                      {tab.icon}
-                    </span>
-                    <span>{tab.label}</span>
-                  </div>
-                  {isActive && <ChevronRight className="w-4 h-4 text-purple-600" />}
-                </button>
-              );
-            })}
-          </div>
+      {/* MOBILE SIDE MENU DRAWER (SLIDE-OVER FROM SIDE) */}
+      {sideMenuOpen && (
+        <div className="fixed inset-0 z-50 overflow-hidden md:hidden">
+          {/* Semi-transparent Backdrop Overlay */}
+          <div
+            className="fixed inset-0 bg-gray-900/60 backdrop-blur-xs transition-opacity duration-300"
+            onClick={() => setSideMenuOpen(false)}
+          />
 
-          <div className="pt-2 border-t border-gray-100">
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenDrawer();
-              }}
-              className="w-full flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-purple-700 to-indigo-700 text-white font-bold text-xs shadow-sm"
-            >
-              <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-purple-300" />
-                <span>Central de IA & Análise ATS</span>
+          {/* Side Panel (Slide-over from Left) */}
+          <div className="fixed inset-y-0 left-0 max-w-xs w-full bg-white shadow-2xl flex flex-col transform transition-transform duration-300 ease-in-out z-50">
+            {/* Side Menu Header */}
+            <div className="p-4 bg-[#004A8D] text-white flex items-center justify-between border-b border-[#004A8D]/20">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
+                  <Sparkles className="w-4 h-4 text-[#F7941D]" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-extrabold leading-tight">Curriculinho</h3>
+                  <p className="text-[10px] text-white/80">Senac • Modo Turbo T.D.S.</p>
+                </div>
               </div>
-              <span
-                className={`text-[11px] font-extrabold px-2 py-0.5 rounded-full text-white ${
-                  score >= 80 ? 'bg-emerald-600' : score >= 60 ? 'bg-amber-500' : 'bg-red-500'
-                }`}
+
+              <button
+                onClick={() => setSideMenuOpen(false)}
+                className="p-1.5 rounded-lg text-white/80 hover:text-white hover:bg-white/10 transition-colors"
+                aria-label="Fechar Menu"
               >
-                {score}%
-              </span>
-            </button>
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Side Menu Content (Navigation Tabs) */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+              <div>
+                <div className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-2 px-1">
+                  Navegação Principal
+                </div>
+                <div className="space-y-1.5">
+                  {tabs.map((tab) => {
+                    const isActive = activeTab === tab.id;
+                    return (
+                      <button
+                        key={tab.id}
+                        onClick={() => handleTabSelect(tab.id)}
+                        className={`w-full flex items-center justify-between p-3 rounded-xl text-xs font-bold transition-all ${
+                          isActive
+                            ? 'bg-[#004A8D] text-white shadow-sm'
+                            : 'bg-gray-50 text-gray-700 hover:bg-gray-100 hover:text-[#004A8D]'
+                        }`}
+                      >
+                        <div className="flex items-center gap-2.5">
+                          <span className={isActive ? 'text-[#F7941D]' : 'text-gray-500'}>
+                            {tab.icon}
+                          </span>
+                          <span>{tab.label}</span>
+                        </div>
+                        {isActive && <ChevronRight className="w-4 h-4 text-[#F7941D]" />}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Central IA shortcut */}
+              <div className="pt-2 border-t border-gray-100">
+                <div className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-2 px-1">
+                  Ferramentas Inteligentes
+                </div>
+                <button
+                  onClick={() => {
+                    setSideMenuOpen(false);
+                    onOpenDrawer();
+                  }}
+                  className="w-full flex items-center justify-between p-3.5 rounded-xl bg-gradient-to-r from-[#004A8D] to-[#00386c] text-white font-bold text-xs shadow-md border border-[#F7941D]/30"
+                >
+                  <div className="flex items-center gap-2">
+                    <Zap className="w-4 h-4 text-[#F7941D]" />
+                    <span>Central de IA & ATS</span>
+                  </div>
+                  <span
+                    className={`text-[11px] font-extrabold px-2 py-0.5 rounded-full text-white ${
+                      score >= 80 ? 'bg-emerald-600' : score >= 60 ? 'bg-[#F7941D]' : 'bg-red-500'
+                    }`}
+                  >
+                    {score}%
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            {/* Side Menu Footer */}
+            <div className="p-4 bg-gray-50 border-t border-gray-200 text-center">
+              <p className="text-[10px] text-gray-600 font-semibold leading-tight">
+                Desenvolvido Pela Turma Técnica de Desenvolvimento de Sistemas
+              </p>
+              <div className="flex justify-center gap-1.5 mt-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#F7941D]" />
+                <span className="w-2.5 h-2.5 rounded-full bg-[#004A8D]" />
+                <span className="w-2.5 h-2.5 rounded-full bg-[#FDC180]" />
+              </div>
+            </div>
           </div>
         </div>
       )}

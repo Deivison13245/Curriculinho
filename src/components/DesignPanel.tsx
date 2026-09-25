@@ -15,13 +15,13 @@ const TEMPLATES: { id: ResumeDesign['template']; title: string; desc: string; co
 ];
 
 const COLOR_SWATCHES = [
-  { name: 'Roxo Jobseeker', hex: '#7C3AED' },
-  { name: 'Azul Real', hex: '#1E40AF' },
+  { name: 'AZUL Senac', hex: '#004A8D' },
+  { name: 'LARANJA Senac', hex: '#F7941D' },
+  { name: 'LARANJA Claro Senac', hex: '#FDC180' },
+  { name: 'Roxo Vibrante', hex: '#7C3AED' },
   { name: 'Azul Escuro', hex: '#0F172A' },
   { name: 'Verde Esmeralda', hex: '#059669' },
   { name: 'Vermelho Carmim', hex: '#DC2626' },
-  { name: 'Laranja Pôr do Sol', hex: '#D97706' },
-  { name: 'Rosa Choque', hex: '#DB2777' },
   { name: 'Cinza Grafite', hex: '#475569' },
 ];
 
