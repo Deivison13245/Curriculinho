@@ -35,9 +35,6 @@ export default function Header({
               Currículo<span className="text-purple-600">Express</span>
               <span className="bg-purple-100 text-purple-700 text-[10px] px-1.5 py-0.5 rounded-full font-bold">PRO</span>
             </div>
-            <div className="text-[11px] text-gray-500 font-medium leading-none">
-              Formulário Estilo Jobseeker
-            </div>
           </div>
         </div>
 
@@ -49,11 +46,10 @@ export default function Header({
               <button
                 key={tab.id}
                 onClick={() => onTabChange(tab.id)}
-                className={`flex items-center gap-2 px-3.5 sm:px-5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-200 ${
-                  isActive
+                className={`flex items-center gap-2 px-3.5 sm:px-5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-200 ${isActive
                     ? 'bg-white text-purple-700 shadow-sm font-bold'
                     : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200/50'
-                }`}
+                  }`}
                 aria-current={isActive ? 'page' : undefined}
               >
                 <span className={isActive ? 'text-purple-600' : 'text-gray-400'}>
@@ -75,11 +71,10 @@ export default function Header({
           >
             <Menu className="w-5 h-5 text-purple-700 group-hover:scale-110 transition-transform" />
             <span className="hidden sm:inline text-xs font-bold">Central IA & Saúde</span>
-            
+
             {/* Score Badge */}
-            <span className={`text-[11px] font-extrabold px-2 py-0.5 rounded-full text-white ${
-              score >= 80 ? 'bg-emerald-600' : score >= 60 ? 'bg-amber-500' : 'bg-red-500'
-            }`}>
+            <span className={`text-[11px] font-extrabold px-2 py-0.5 rounded-full text-white ${score >= 80 ? 'bg-emerald-600' : score >= 60 ? 'bg-amber-500' : 'bg-red-500'
+              }`}>
               {score}%
             </span>
 

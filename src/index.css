@@ -141,3 +141,38 @@ input:focus, textarea:focus, select:focus {
 .modal-backdrop {
   backdrop-filter: blur(4px);
 }
+
+/* @media print for PDF Export */
+@media print {
+  @page {
+    margin: 0;
+    size: A4;
+  }
+  
+  body, html {
+    background: white !important;
+    color: black !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  header, nav, button, footer, .modal-backdrop, .toast-enter, [role="dialog"], .no-print, .fixed, input, select, textarea {
+    display: none !important;
+  }
+
+  main {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  #resume-preview {
+    box-shadow: none !important;
+    border: none !important;
+    width: 210mm !important;
+    min-height: 297mm !important;
+    padding: 15mm !important;
+    margin: 0 auto !important;
+    transform: none !important;
+  }
+}

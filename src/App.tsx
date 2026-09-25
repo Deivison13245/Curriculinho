@@ -14,6 +14,9 @@ import ReviewModal from './components/modals/ReviewModal';
 import AtsModal from './components/modals/AtsModal';
 import ExportModal from './components/modals/ExportModal';
 import ImportModal from './components/modals/ImportModal';
+import TranslationModal from './components/modals/TranslationModal';
+
+import { exportToWord } from './utils/wordExport';
 
 const DEFAULT_DATA: ResumeData = {
   name: 'Ana Paula Ferreira',
@@ -162,11 +165,16 @@ export default function App() {
   }, []);
 
   function handlePrint() {
-    window.print();
+    // Automatically switch to preview tab so only the A4 resume prints!
+    setActiveTab('preview');
+    setTimeout(() => {
+      window.print();
+    }, 150);
   }
 
   function handleExportWord() {
-    addToast('✓ Exportação para Word (.docx) iniciada!', 'info');
+    exportToWord(data);
+    addToast('✓ Exportação para Word (.doc) concluída com sucesso!');
   }
 
   const score = computeScore(data);
@@ -212,6 +220,7 @@ export default function App() {
             onPrint={handlePrint}
             onExportWord={handleExportWord}
             onOpenExport={() => setModal('export')}
+            onOpenTranslate={() => setModal('translate')}
           />
         )}
       </main>
@@ -231,12 +240,13 @@ export default function App() {
         onOpenReview={() => setModal('review')}
         onOpenAts={() => setModal('ats')}
         onOpenExport={() => setModal('export')}
+        onOpenTranslate={() => setModal('translate')}
       />
 
       {/* 3. BOTÃO FIXO DE DOWNLOAD PDF */}
       <FloatingDownloadButton onDownload={handlePrint} score={score} />
 
-      {/* MODALS DE IA & EXPORTAÇÃO */}
+      {/* MODALS DE IA, TRADUÇÃO & EXPORTAÇÃO */}
       {modal === 'synthesis' && (
         <SynthesisModal
           jobTitle={data.jobTitle}
@@ -309,6 +319,17 @@ export default function App() {
             }));
             addToast('✓ Perfil importado com sucesso!');
           }}
+        />
+      )}
+
+      {modal === 'translate' && (
+        <TranslationModal
+          data={data}
+          onApplyTranslation={(translatedData, langName) => {
+            setData((d) => ({ ...d, ...translatedData }));
+            addToast(`✓ Currículo traduzido para ${langName} com sucesso!`);
+          }}
+          onClose={() => setModal(null)}
         />
       )}
 

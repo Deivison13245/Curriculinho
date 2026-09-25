@@ -19,6 +19,7 @@ interface PreviewPanelProps {
   onPrint: () => void;
   onExportWord: () => void;
   onOpenExport: () => void;
+  onOpenTranslate: () => void;
 }
 
 export default function PreviewPanel({
@@ -26,6 +27,7 @@ export default function PreviewPanel({
   onPrint,
   onExportWord,
   onOpenExport,
+  onOpenTranslate,
 }: PreviewPanelProps) {
   const [zoom, setZoom] = useState(100);
 
@@ -93,7 +95,7 @@ export default function PreviewPanel({
             <span>Word (.docx)</span>
           </button>
           <button
-            onClick={onOpenExport}
+            onClick={onOpenTranslate}
             className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs font-bold transition-all"
           >
             <Globe className="w-4 h-4 text-emerald-600" />

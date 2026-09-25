@@ -108,7 +108,7 @@ export interface ResumeData {
 
 export type TabType = 'content' | 'design' | 'preview';
 
-export type ModalType = 'synthesis' | 'star' | 'review' | 'ats' | 'export' | 'import' | null;
+export type ModalType = 'synthesis' | 'star' | 'review' | 'ats' | 'export' | 'import' | 'translate' | null;
 
 export interface Toast {
   id: string;

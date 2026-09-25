@@ -1,4 +1,4 @@
-import { X, Sparkles, Target, Zap, CheckCircle2, AlertTriangle, ShieldCheck, FileCheck, ArrowRight } from 'lucide-react';
+import { X, Sparkles, Target, Zap, CheckCircle2, AlertTriangle, ShieldCheck, FileCheck, ArrowRight, Globe } from 'lucide-react';
 import type { ResumeData } from '../types';
 
 interface AIAssistantDrawerProps {
@@ -11,6 +11,7 @@ interface AIAssistantDrawerProps {
   onOpenReview: () => void;
   onOpenAts: () => void;
   onOpenExport: () => void;
+  onOpenTranslate: () => void;
 }
 
 export default function AIAssistantDrawer({
@@ -23,6 +24,7 @@ export default function AIAssistantDrawer({
   onOpenReview,
   onOpenAts,
   onOpenExport,
+  onOpenTranslate,
 }: AIAssistantDrawerProps) {
   if (!isOpen) return null;
 
@@ -259,6 +261,27 @@ export default function AIAssistantDrawer({
                       </div>
                     </div>
                     <ArrowRight className="w-4 h-4 text-amber-400 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+
+                {/* Translation Card */}
+                <div
+                  onClick={() => { onClose(); onOpenTranslate(); }}
+                  className="p-4 rounded-xl border border-emerald-100 bg-gradient-to-r from-emerald-50/50 to-white hover:border-emerald-300 hover:shadow-md transition-all cursor-pointer group"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="p-2.5 bg-emerald-600 text-white rounded-xl group-hover:scale-105 transition-transform">
+                      <Globe className="w-5 h-5 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="text-xs font-bold text-emerald-900 group-hover:text-emerald-700">
+                        Tradutor Multilíngue (EN / ES / FR / DE)
+                      </div>
+                      <div className="text-[11px] text-gray-600 mt-0.5">
+                        Traduza seu currículo para inglês ou espanhol mantendo os termos técnicos.
+                      </div>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-emerald-400 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
               </div>
