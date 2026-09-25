@@ -291,7 +291,7 @@ export default function AIAssistantDrawer({
           {/* Drawer Footer */}
           <div className="p-4 bg-gray-50 border-t border-gray-200 text-center">
             <p className="text-[11px] text-gray-500">
-              Desenvolvido com padrão visual Jobseeker.com • Otimização ATS Ativa
+              Curriculinho PRO • PWA Offline Habilitado • Padrão Jobseeker
             </p>
           </div>
         </div>
