@@ -1,11 +1,11 @@
 {
-  "name": "Curriculinho - Gerador de Currículo Inteligente",
-  "short_name": "Curriculinho",
-  "description": "Crie, edite e exporte seu currículo de forma simples, moderna e offline.",
+  "name": "Currículo Express - Senac T.D.S.",
+  "short_name": "Currículo Express",
+  "description": "Crie, edite e baixe seu currículo profissional com facilidade, inteligência e suporte offline.",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#F9FAFB",
-  "theme_color": "#7C3AED",
+  "background_color": "#F8FAFC",
+  "theme_color": "#004A8D",
   "orientation": "portrait-primary",
   "icons": [
     {
