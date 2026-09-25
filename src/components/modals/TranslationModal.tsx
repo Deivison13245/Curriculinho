@@ -94,8 +94,8 @@ export default function TranslationModal({
                 onClick={() => setSelectedLang(lang.id)}
                 className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${
                   isSelected
-                    ? 'border-purple-600 bg-purple-50/50 shadow-xs'
-                    : 'border-gray-200 hover:border-purple-200 bg-white'
+                    ? 'border-[#004A8D] bg-[#004A8D]/5 shadow-xs'
+                    : 'border-gray-200 hover:border-[#004A8D]/30 bg-white'
                 }`}
               >
                 <div className="flex items-center justify-between">
@@ -103,11 +103,11 @@ export default function TranslationModal({
                     <span className="text-2xl">{lang.flag}</span>
                     <div>
                       <h4 className="text-xs font-bold text-gray-900">{lang.name}</h4>
-                      <p className="text-[10px] text-purple-700 font-medium">{lang.jobTitle}</p>
+                      <p className="text-[10px] text-[#004A8D] font-medium">{lang.jobTitle}</p>
                     </div>
                   </div>
                   {isSelected && (
-                    <div className="w-5 h-5 rounded-full bg-purple-600 text-white flex items-center justify-center text-xs">
+                    <div className="w-5 h-5 rounded-full bg-[#004A8D] text-white flex items-center justify-center text-xs font-bold">
                       ✓
                     </div>
                   )}
@@ -118,18 +118,18 @@ export default function TranslationModal({
         </div>
 
         {loading ? (
-          <div className="p-4 bg-purple-50 rounded-xl text-center space-y-2">
-            <div className="w-6 h-6 border-2 border-purple-600 border-t-transparent rounded-full animate-spin mx-auto" />
-            <p className="text-xs font-bold text-purple-900">
+          <div className="p-4 bg-[#004A8D]/10 rounded-xl text-center space-y-2">
+            <div className="w-6 h-6 border-2 border-[#004A8D] border-t-transparent rounded-full animate-spin mx-auto" />
+            <p className="text-xs font-bold text-[#004A8D]">
               Traduzindo termos técnicos e ajustando concordância...
             </p>
           </div>
         ) : (
           <button
             onClick={handleTranslate}
-            className="w-full py-3 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs transition-all shadow-sm flex items-center justify-center gap-2"
+            className="w-full py-3 rounded-xl bg-[#004A8D] hover:bg-[#00386c] text-white font-bold text-xs transition-all shadow-sm flex items-center justify-center gap-2"
           >
-            <Sparkles className="w-4 h-4" />
+            <Sparkles className="w-4 h-4 text-[#F7941D]" />
             <span>Traduzir Currículo Agora</span>
           </button>
         )}

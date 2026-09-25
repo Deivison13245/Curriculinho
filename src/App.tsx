@@ -225,12 +225,14 @@ export default function App() {
         )}
       </main>
 
-      {/* 2. MENU HAMBÚRGUER / DRAWER DE IA E SAÚDE DO CURRÍCULO */}
+      {/* 2. UNIFIED DRAWER / MENU ÚNICO & CENTRAL DE IA */}
       <AIAssistantDrawer
         isOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
         score={score}
         data={data}
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
         onOpenSynthesis={() => setModal('synthesis')}
         onOpenStar={() => {
           const firstExpId = data.experience[0]?.id || '';

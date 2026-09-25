@@ -72,7 +72,7 @@ export default function PreviewPanel({
           </button>
           <button
             onClick={() => setZoom(100)}
-            className="px-2.5 py-1 text-xs font-bold text-purple-700 bg-purple-50 hover:bg-purple-100 rounded-lg transition-colors"
+            className="px-2.5 py-1 text-xs font-bold text-[#004A8D] bg-[#004A8D]/10 hover:bg-[#004A8D]/20 rounded-lg transition-colors"
           >
             100%
           </button>
@@ -82,9 +82,9 @@ export default function PreviewPanel({
         <div className="flex flex-wrap items-center gap-2">
           <button
             onClick={onPrint}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold transition-all shadow-sm"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#004A8D] hover:bg-[#00386c] text-white text-xs font-bold transition-all shadow-sm"
           >
-            <Download className="w-4 h-4" />
+            <Download className="w-4 h-4 text-[#F7941D]" />
             <span>Baixar PDF / Imprimir</span>
           </button>
           <button

@@ -48,7 +48,7 @@ function InputField({ label, ...props }: { label: string } & React.InputHTMLAttr
     <div>
       <label className="block text-xs font-semibold text-gray-700 mb-1">{label}</label>
       <input
-        className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-900 bg-gray-50/50 hover:bg-white focus:bg-white placeholder-gray-400 transition-all duration-200 shadow-2xs"
+        className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-900 bg-gray-50/50 hover:bg-white focus:bg-white focus:border-[#004A8D] focus:ring-2 focus:ring-[#004A8D]/20 placeholder-gray-400 transition-all duration-200 shadow-2xs"
         {...props}
       />
     </div>
@@ -60,7 +60,7 @@ function TextareaField({ label, ...props }: { label: string } & React.TextareaHT
     <div>
       <label className="block text-xs font-semibold text-gray-700 mb-1">{label}</label>
       <textarea
-        className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-900 bg-gray-50/50 hover:bg-white focus:bg-white placeholder-gray-400 resize-none transition-all duration-200 shadow-2xs"
+        className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-900 bg-gray-50/50 hover:bg-white focus:bg-white focus:border-[#004A8D] focus:ring-2 focus:ring-[#004A8D]/20 placeholder-gray-400 resize-none transition-all duration-200 shadow-2xs"
         {...props}
       />
     </div>
@@ -76,7 +76,7 @@ function SelectField({
     <div>
       <label className="block text-xs font-semibold text-gray-700 mb-1">{label}</label>
       <select
-        className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-900 bg-gray-50/50 hover:bg-white focus:bg-white transition-all duration-200 shadow-2xs"
+        className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-900 bg-gray-50/50 hover:bg-white focus:bg-white focus:border-[#004A8D] focus:ring-2 focus:ring-[#004A8D]/20 transition-all duration-200 shadow-2xs"
         {...props}
       >
         <option value="">Selecione...</option>
@@ -111,7 +111,7 @@ function AccordionSection({
   badgeCount,
 }: AccordionSectionProps) {
   return (
-    <div className="bg-white rounded-2xl border border-gray-200/90 shadow-xs overflow-hidden transition-all duration-200 hover:border-purple-200">
+    <div className="bg-white rounded-2xl border border-gray-200/90 shadow-xs overflow-hidden transition-all duration-200 hover:border-[#004A8D]/40">
       <button
         type="button"
         onClick={onToggle}
@@ -119,16 +119,16 @@ function AccordionSection({
         aria-expanded={isOpen}
       >
         <div className="flex items-center gap-3.5">
-          <div className="p-2.5 rounded-xl bg-purple-50 text-purple-700 group-hover:bg-purple-100 transition-colors">
+          <div className="p-2.5 rounded-xl bg-[#004A8D]/10 text-[#004A8D] group-hover:bg-[#004A8D] group-hover:text-white transition-colors">
             {icon}
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="text-sm font-bold text-gray-900 group-hover:text-purple-700 transition-colors">
+              <h3 className="text-sm font-bold text-gray-900 group-hover:text-[#004A8D] transition-colors">
                 {title}
               </h3>
               {typeof badgeCount === 'number' && badgeCount > 0 && (
-                <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-purple-100 text-purple-700">
+                <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-[#F7941D]/20 text-[#004A8D]">
                   {badgeCount}
                 </span>
               )}
@@ -136,7 +136,7 @@ function AccordionSection({
             {subtitle && <p className="text-xs text-gray-500 font-medium">{subtitle}</p>}
           </div>
         </div>
-        <div className="text-gray-400 group-hover:text-purple-600 transition-colors">
+        <div className="text-gray-400 group-hover:text-[#004A8D] transition-colors">
           {isOpen ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
         </div>
       </button>
@@ -177,7 +177,6 @@ export default function FormPanel({
     setOpenSection(prev => (prev === sectionKey ? null : sectionKey));
   }
 
-  // Personal Field chips toggle
   function togglePersonalField(field: keyof typeof data.enabledPersonalFields) {
     update({
       enabledPersonalFields: {
@@ -187,7 +186,6 @@ export default function FormPanel({
     });
   }
 
-  // Main Section chips toggle
   function toggleMainSection(section: keyof typeof data.enabledSections) {
     const isCurrentlyEnabled = data.enabledSections[section];
     update({
@@ -201,7 +199,7 @@ export default function FormPanel({
     }
   }
 
-  // Education Helpers
+  // Helpers
   function addEdu() {
     update({
       education: [
@@ -217,7 +215,6 @@ export default function FormPanel({
     update({ education: data.education.filter(e => e.id !== id) });
   }
 
-  // Experience Helpers
   function addExp() {
     update({
       experience: [
@@ -233,7 +230,6 @@ export default function FormPanel({
     update({ experience: data.experience.filter(e => e.id !== id) });
   }
 
-  // Skills
   function toggleSkill(list: 'hardSkills' | 'softSkills', skill: string) {
     const current = data[list];
     if (current.includes(skill)) {
@@ -243,7 +239,6 @@ export default function FormPanel({
     }
   }
 
-  // Language Helpers
   function addLang() {
     update({ languages: [...data.languages, { id: uid(), name: '', level: '' }] });
   }
@@ -254,7 +249,6 @@ export default function FormPanel({
     update({ languages: data.languages.filter(l => l.id !== id) });
   }
 
-  // Certifications Helpers
   function addCert() {
     update({ certifications: [...data.certifications, { id: uid(), name: '', issuer: '', year: '' }] });
   }
@@ -265,7 +259,6 @@ export default function FormPanel({
     update({ certifications: data.certifications.filter(c => c.id !== id) });
   }
 
-  // Projects Helpers
   function addProject() {
     update({
       projects: [...data.projects, { id: uid(), title: '', description: '', link: '', year: '' }],
@@ -278,7 +271,6 @@ export default function FormPanel({
     update({ projects: data.projects.filter(p => p.id !== id) });
   }
 
-  // Custom Sections Helpers
   function addCustomSection() {
     update({
       customSections: [
@@ -298,15 +290,15 @@ export default function FormPanel({
 
   return (
     <div className="max-w-4xl mx-auto space-y-6 pb-24">
-      {/* 3.1 CARD DE IMPORTAÇÃO SUPERIOR (JOBSEEKER PATTERN) */}
-      <div className="bg-white rounded-2xl p-5 border border-purple-100 shadow-sm bg-gradient-to-r from-purple-50/30 via-white to-indigo-50/20">
+      {/* 1. CARD DE IMPORTAÇÃO SUPERIOR (SENAC BRANDING) */}
+      <div className="bg-white rounded-2xl p-5 border border-[#004A8D]/20 shadow-xs bg-gradient-to-r from-[#004A8D]/5 via-white to-[#F7941D]/10">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h2 className="text-sm font-bold text-gray-900 flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-purple-600" />
+            <h2 className="text-sm font-bold text-[#004A8D] flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-[#F7941D]" />
               Importação Inteligente de Dados
             </h2>
-            <p className="text-xs text-gray-500 mt-0.5">
+            <p className="text-xs text-gray-600 mt-0.5">
               Economize tempo preenchendo os dados do seu currículo automaticamente.
             </p>
           </div>
@@ -322,27 +314,27 @@ export default function FormPanel({
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white border border-purple-200 text-purple-700 text-xs font-bold hover:bg-purple-50 transition-all shadow-2xs group"
+              className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white border border-[#004A8D]/30 text-[#004A8D] text-xs font-bold hover:bg-[#004A8D]/10 transition-all shadow-2xs group"
             >
-              <Upload className="w-4 h-4 text-purple-600 group-hover:scale-110 transition-transform" />
+              <Upload className="w-4 h-4 text-[#004A8D] group-hover:scale-110 transition-transform" />
               <span>Upload de Currículo</span>
             </button>
 
             <button
               type="button"
               onClick={onOpenImportModal}
-              className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-purple-600 text-white text-xs font-bold hover:bg-purple-700 transition-all shadow-sm group"
+              className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#004A8D] text-white text-xs font-bold hover:bg-[#00386c] transition-all shadow-sm group"
             >
-              <Link className="w-4 h-4 group-hover:rotate-12 transition-transform" />
+              <Link className="w-4 h-4 text-[#F7941D] group-hover:rotate-12 transition-transform" />
               <span>Importar LinkedIn</span>
             </button>
           </div>
         </div>
       </div>
 
-      {/* 3.2 ACCORDIONS DE SEÇÕES */}
+      {/* ACCORDIONS DE SEÇÕES */}
 
-      {/* 1. DADOS PESSOAIS */}
+      {/* DADOS PESSOAIS */}
       <AccordionSection
         id="personal"
         title="Dados Pessoais"
@@ -458,9 +450,9 @@ export default function FormPanel({
             )}
           </div>
 
-          {/* 3.3 CHIPS DE EXPANSÃO INTERNA (DADOS PESSOAIS) */}
+          {/* CHIPS DE EXPANSÃO INTERNA (DADOS PESSOAIS) */}
           <div className="pt-3 border-t border-gray-100">
-            <label className="block text-xs font-semibold text-gray-500 mb-2">
+            <label className="block text-xs font-semibold text-gray-600 mb-2">
               Adicionar campos opcionais aos Dados Pessoais:
             </label>
             <div className="flex flex-wrap gap-2">
@@ -481,11 +473,11 @@ export default function FormPanel({
                     onClick={() => togglePersonalField(chip.key as keyof typeof data.enabledPersonalFields)}
                     className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
                       isEnabled
-                        ? 'bg-purple-100 text-purple-700 border border-purple-300'
+                        ? 'bg-[#004A8D] text-white shadow-2xs'
                         : 'bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-200'
                     }`}
                   >
-                    {isEnabled ? <Check className="w-3.5 h-3.5 text-purple-600" /> : <Plus className="w-3.5 h-3.5 text-gray-500" />}
+                    {isEnabled ? <Check className="w-3.5 h-3.5 text-[#F7941D]" /> : <Plus className="w-3.5 h-3.5 text-gray-500" />}
                     <span>{chip.label}</span>
                   </button>
                 );
@@ -495,7 +487,7 @@ export default function FormPanel({
         </div>
       </AccordionSection>
 
-      {/* 2. RESUMO PROFISSIONAL */}
+      {/* RESUMO PROFISSIONAL */}
       {data.enabledSections.summary && (
         <AccordionSection
           id="summary"
@@ -513,9 +505,9 @@ export default function FormPanel({
               <button
                 type="button"
                 onClick={onOpenSynthesis}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-purple-50 text-purple-700 hover:bg-purple-100 border border-purple-200 transition-colors"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-[#004A8D]/10 text-[#004A8D] hover:bg-[#004A8D] hover:text-white border border-[#004A8D]/20 transition-all"
               >
-                <Sparkles className="w-3.5 h-3.5 text-purple-600" />
+                <Sparkles className="w-3.5 h-3.5 text-[#F7941D]" />
                 <span>Gerar com IA</span>
               </button>
             </div>
@@ -524,13 +516,13 @@ export default function FormPanel({
               rows={4}
               value={data.summary}
               onChange={e => update({ summary: e.target.value })}
-              placeholder="Profissional com mais de 5 anos de experiência na área de desenvolvimento..."
+              placeholder="Profissional com mais de 5 anos de experiência na área..."
             />
           </div>
         </AccordionSection>
       )}
 
-      {/* 3. EXPERIÊNCIA PROFISSIONAL */}
+      {/* EXPERIÊNCIA PROFISSIONAL */}
       {data.enabledSections.experience && (
         <AccordionSection
           id="experience"
@@ -548,7 +540,7 @@ export default function FormPanel({
                 className="p-4 rounded-xl border border-gray-200 bg-gray-50/50 space-y-4 relative group"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-gray-600">
+                  <span className="text-xs font-bold text-[#004A8D]">
                     Experiência #{idx + 1}
                   </span>
                   {data.experience.length > 1 && (
@@ -595,7 +587,7 @@ export default function FormPanel({
                         type="checkbox"
                         checked={exp.current}
                         onChange={e => updateExp(exp.id, { current: e.target.checked })}
-                        className="rounded text-purple-600 focus:ring-purple-500"
+                        className="rounded text-[#004A8D] focus:ring-[#004A8D]"
                       />
                       <span>Trabalho atual aqui</span>
                     </label>
@@ -610,9 +602,9 @@ export default function FormPanel({
                     <button
                       type="button"
                       onClick={() => onOpenStar(exp.id)}
-                      className="inline-flex items-center gap-1 text-[11px] font-bold text-purple-700 hover:text-purple-900 bg-purple-50 px-2.5 py-1 rounded-md transition-colors"
+                      className="inline-flex items-center gap-1 text-[11px] font-bold text-[#004A8D] hover:text-[#00386c] bg-[#004A8D]/10 px-2.5 py-1 rounded-md transition-colors"
                     >
-                      <Zap className="w-3 h-3 text-purple-600" />
+                      <Zap className="w-3 h-3 text-[#F7941D]" />
                       <span>Melhorar com STAR IA</span>
                     </button>
                   </div>
@@ -621,7 +613,7 @@ export default function FormPanel({
                     rows={3}
                     value={exp.description}
                     onChange={e => updateExp(exp.id, { description: e.target.value })}
-                    placeholder="Desenvolvimento de sistemas escaláveis, liderança de equipe, otimização de performance..."
+                    placeholder="Desenvolvimento de sistemas escaláveis, liderança..."
                   />
                 </div>
               </div>
@@ -630,16 +622,16 @@ export default function FormPanel({
             <button
               type="button"
               onClick={addExp}
-              className="w-full py-3 rounded-xl border-2 border-dashed border-purple-200 text-purple-700 text-xs font-bold hover:bg-purple-50 hover:border-purple-300 transition-all flex items-center justify-center gap-2"
+              className="w-full py-3 rounded-xl border-2 border-dashed border-[#004A8D]/30 text-[#004A8D] text-xs font-bold hover:bg-[#004A8D]/10 hover:border-[#004A8D] transition-all flex items-center justify-center gap-2"
             >
-              <Plus className="w-4 h-4" />
+              <Plus className="w-4 h-4 text-[#F7941D]" />
               <span>Adicionar Outra Experiência</span>
             </button>
           </div>
         </AccordionSection>
       )}
 
-      {/* 4. FORMAÇÃO ACADÊMICA */}
+      {/* FORMAÇÃO ACADÊMICA */}
       {data.enabledSections.education && (
         <AccordionSection
           id="education"
@@ -657,7 +649,7 @@ export default function FormPanel({
                 className="p-4 rounded-xl border border-gray-200 bg-gray-50/50 space-y-4 relative"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-gray-600">
+                  <span className="text-xs font-bold text-[#004A8D]">
                     Formação #{idx + 1}
                   </span>
                   {data.education.length > 1 && (
@@ -712,16 +704,16 @@ export default function FormPanel({
             <button
               type="button"
               onClick={addEdu}
-              className="w-full py-3 rounded-xl border-2 border-dashed border-purple-200 text-purple-700 text-xs font-bold hover:bg-purple-50 hover:border-purple-300 transition-all flex items-center justify-center gap-2"
+              className="w-full py-3 rounded-xl border-2 border-dashed border-[#004A8D]/30 text-[#004A8D] text-xs font-bold hover:bg-[#004A8D]/10 hover:border-[#004A8D] transition-all flex items-center justify-center gap-2"
             >
-              <Plus className="w-4 h-4" />
+              <Plus className="w-4 h-4 text-[#F7941D]" />
               <span>Adicionar Outra Formação</span>
             </button>
           </div>
         </AccordionSection>
       )}
 
-      {/* 5. COMPETÊNCIAS */}
+      {/* COMPETÊNCIAS */}
       {data.enabledSections.skills && (
         <AccordionSection
           id="skills"
@@ -748,8 +740,8 @@ export default function FormPanel({
                       onClick={() => toggleSkill('hardSkills', skill)}
                       className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
                         active
-                          ? 'bg-purple-600 text-white shadow-xs'
-                          : 'bg-purple-50 text-purple-700 hover:bg-purple-100'
+                          ? 'bg-[#004A8D] text-white shadow-2xs'
+                          : 'bg-[#004A8D]/10 text-[#004A8D] hover:bg-[#004A8D]/20'
                       }`}
                     >
                       {active ? `✓ ${skill}` : `+ ${skill}`}
@@ -774,8 +766,8 @@ export default function FormPanel({
                       onClick={() => toggleSkill('softSkills', skill)}
                       className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
                         active
-                          ? 'bg-indigo-600 text-white shadow-xs'
-                          : 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100'
+                          ? 'bg-[#F7941D] text-white shadow-2xs'
+                          : 'bg-[#F7941D]/15 text-[#D97706] hover:bg-[#F7941D]/25'
                       }`}
                     >
                       {active ? `✓ ${skill}` : `+ ${skill}`}
@@ -788,7 +780,7 @@ export default function FormPanel({
         </AccordionSection>
       )}
 
-      {/* 6. IDIOMAS */}
+      {/* IDIOMAS */}
       {data.enabledSections.languages && (
         <AccordionSection
           id="languages"
@@ -831,16 +823,16 @@ export default function FormPanel({
             <button
               type="button"
               onClick={addLang}
-              className="py-2.5 px-4 rounded-xl border border-purple-200 text-purple-700 text-xs font-bold hover:bg-purple-50 transition-all flex items-center gap-2"
+              className="py-2.5 px-4 rounded-xl border border-[#004A8D]/30 text-[#004A8D] text-xs font-bold hover:bg-[#004A8D]/10 transition-all flex items-center gap-2"
             >
-              <Plus className="w-4 h-4" />
+              <Plus className="w-4 h-4 text-[#F7941D]" />
               <span>Adicionar Idioma</span>
             </button>
           </div>
         </AccordionSection>
       )}
 
-      {/* 7. CERTIFICADOS */}
+      {/* CERTIFICADOS */}
       {data.enabledSections.certifications && (
         <AccordionSection
           id="certifications"
@@ -891,16 +883,16 @@ export default function FormPanel({
             <button
               type="button"
               onClick={addCert}
-              className="py-2.5 px-4 rounded-xl border border-purple-200 text-purple-700 text-xs font-bold hover:bg-purple-50 transition-all flex items-center gap-2"
+              className="py-2.5 px-4 rounded-xl border border-[#004A8D]/30 text-[#004A8D] text-xs font-bold hover:bg-[#004A8D]/10 transition-all flex items-center gap-2"
             >
-              <Plus className="w-4 h-4" />
+              <Plus className="w-4 h-4 text-[#F7941D]" />
               <span>Adicionar Certificado</span>
             </button>
           </div>
         </AccordionSection>
       )}
 
-      {/* 8. PROJETOS & REALIZAÇÕES */}
+      {/* PROJETOS & REALIZAÇÕES */}
       {data.enabledSections.projects && (
         <AccordionSection
           id="projects"
@@ -915,7 +907,7 @@ export default function FormPanel({
             {data.projects.map((proj) => (
               <div key={proj.id} className="p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-3">
                 <div className="flex justify-between items-center">
-                  <span className="text-xs font-bold text-gray-700">Projeto</span>
+                  <span className="text-xs font-bold text-[#004A8D]">Projeto</span>
                   <button
                     type="button"
                     onClick={() => removeProject(proj.id)}
@@ -943,7 +935,7 @@ export default function FormPanel({
                   rows={2}
                   value={proj.description}
                   onChange={e => updateProject(proj.id, { description: e.target.value })}
-                  placeholder="Projeto desenvolvido em React e Node.js para otimizar vendas..."
+                  placeholder="Projeto desenvolvido em React e Node.js..."
                 />
               </div>
             ))}
@@ -951,16 +943,16 @@ export default function FormPanel({
             <button
               type="button"
               onClick={addProject}
-              className="py-2.5 px-4 rounded-xl border border-purple-200 text-purple-700 text-xs font-bold hover:bg-purple-50 transition-all flex items-center gap-2"
+              className="py-2.5 px-4 rounded-xl border border-[#004A8D]/30 text-[#004A8D] text-xs font-bold hover:bg-[#004A8D]/10 transition-all flex items-center gap-2"
             >
-              <Plus className="w-4 h-4" />
+              <Plus className="w-4 h-4 text-[#F7941D]" />
               <span>Adicionar Projeto</span>
             </button>
           </div>
         </AccordionSection>
       )}
 
-      {/* 9. SEÇÃO PERSONALIZADA */}
+      {/* SEÇÃO PERSONALIZADA */}
       {data.enabledSections.custom && (
         <AccordionSection
           id="custom"
@@ -975,7 +967,7 @@ export default function FormPanel({
             {data.customSections.map((cs) => (
               <div key={cs.id} className="p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-3">
                 <div className="flex justify-between items-center">
-                  <span className="text-xs font-bold text-gray-700">Seção Extra</span>
+                  <span className="text-xs font-bold text-[#004A8D]">Seção Extra</span>
                   <button
                     type="button"
                     onClick={() => removeCustomSection(cs.id)}
@@ -1003,19 +995,19 @@ export default function FormPanel({
             <button
               type="button"
               onClick={addCustomSection}
-              className="py-2.5 px-4 rounded-xl border border-purple-200 text-purple-700 text-xs font-bold hover:bg-purple-50 transition-all flex items-center gap-2"
+              className="py-2.5 px-4 rounded-xl border border-[#004A8D]/30 text-[#004A8D] text-xs font-bold hover:bg-[#004A8D]/10 transition-all flex items-center gap-2"
             >
-              <Plus className="w-4 h-4" />
+              <Plus className="w-4 h-4 text-[#F7941D]" />
               <span>Adicionar Campo Personalizado</span>
             </button>
           </div>
         </AccordionSection>
       )}
 
-      {/* 3.4 BARRA DE ADIÇÃO DE NOVAS SEÇÕES (CHIPS NO RODAPÉ DO FORMULÁRIO) */}
+      {/* BARRA DE ADIÇÃO DE NOVAS SEÇÕES (CHIPS NO RODAPÉ DO FORMULÁRIO) */}
       <div className="bg-white rounded-2xl p-5 border border-gray-200 shadow-xs space-y-3">
         <div className="flex items-center gap-2">
-          <Plus className="w-4 h-4 text-purple-600" />
+          <Plus className="w-4 h-4 text-[#004A8D]" />
           <h3 className="text-xs font-bold text-gray-900 uppercase tracking-wider">
             Adicionar Seções Adicionais ao Currículo
           </h3>
@@ -1043,11 +1035,11 @@ export default function FormPanel({
                 onClick={() => toggleMainSection(chip.key as keyof typeof data.enabledSections)}
                 className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
                   isEnabled
-                    ? 'bg-purple-600 text-white shadow-xs hover:bg-purple-700'
+                    ? 'bg-[#004A8D] text-white shadow-xs hover:bg-[#00386c]'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-200'
                 }`}
               >
-                {isEnabled ? <Check className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
+                {isEnabled ? <Check className="w-3.5 h-3.5 text-[#F7941D]" /> : <Plus className="w-3.5 h-3.5 text-gray-500" />}
                 <span>{chip.label}</span>
               </button>
             );

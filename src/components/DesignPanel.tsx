@@ -7,7 +7,7 @@ interface DesignPanelProps {
 }
 
 const TEMPLATES: { id: ResumeDesign['template']; title: string; desc: string; color: string }[] = [
-  { id: 'jobseeker', title: 'Jobseeker Modern', desc: 'Design vibrante com roxo elegante, destaque no cabeçalho e alta legibilidade.', color: '#7C3AED' },
+  { id: 'jobseeker', title: 'Currículo Express Senac', desc: 'Design vibrante com azul Senac e destaque no cabeçalho.', color: '#004A8D' },
   { id: 'modern', title: 'Corporativo Blue', desc: 'Estilo corporativo tradicional com tons azuis e linhas organizadas.', color: '#1E40AF' },
   { id: 'elegant', title: 'Slate Elegante', desc: 'Linhas finas, tons sóbrios de cinza e acabamento executivo minimalista.', color: '#334155' },
   { id: 'executive', title: 'Executivo Serif', desc: 'Fontes elegantes no título, divisórias destacadas e toque clássico.', color: '#059669' },
@@ -40,12 +40,12 @@ export default function DesignPanel({ design, onChange }: DesignPanelProps) {
   return (
     <div className="max-w-4xl mx-auto space-y-6 pb-24">
       {/* Header Info */}
-      <div className="bg-gradient-to-r from-purple-900 to-indigo-900 text-white rounded-2xl p-6 shadow-md">
+      <div className="bg-gradient-to-r from-[#004A8D] to-[#003463] text-white rounded-2xl p-6 shadow-md border border-[#F7941D]/30">
         <h2 className="text-lg font-bold flex items-center gap-2">
-          <Palette className="w-5 h-5 text-purple-300" />
+          <Palette className="w-5 h-5 text-[#F7941D]" />
           Personalização de Design & Layout
         </h2>
-        <p className="text-xs text-purple-200 mt-1">
+        <p className="text-xs text-[#FDC180] mt-1 font-medium">
           Ajuste as cores, tipografia, modelos e margens do seu currículo em tempo real.
         </p>
       </div>
@@ -53,7 +53,7 @@ export default function DesignPanel({ design, onChange }: DesignPanelProps) {
       {/* 1. SELEÇÃO DE MODELOS (TEMPLATES) */}
       <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-xs space-y-4">
         <h3 className="text-sm font-bold text-gray-900 flex items-center gap-2">
-          <Layout className="w-4 h-4 text-purple-600" />
+          <Layout className="w-4 h-4 text-[#004A8D]" />
           Escolha o Modelo (Template)
         </h3>
 
@@ -66,8 +66,8 @@ export default function DesignPanel({ design, onChange }: DesignPanelProps) {
                 onClick={() => update({ template: t.id })}
                 className={`p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 relative ${
                   isSelected
-                    ? 'border-purple-600 bg-purple-50/40 shadow-sm'
-                    : 'border-gray-200 bg-white hover:border-purple-200 hover:bg-gray-50'
+                    ? 'border-[#004A8D] bg-[#004A8D]/5 shadow-sm'
+                    : 'border-gray-200 bg-white hover:border-[#004A8D]/30 hover:bg-gray-50'
                 }`}
               >
                 <div className="flex items-center justify-between mb-2">
@@ -79,8 +79,8 @@ export default function DesignPanel({ design, onChange }: DesignPanelProps) {
                     <h4 className="text-xs font-bold text-gray-900">{t.title}</h4>
                   </div>
                   {isSelected && (
-                    <div className="w-5 h-5 rounded-full bg-purple-600 text-white flex items-center justify-center text-xs">
-                      <Check className="w-3.5 h-3.5" />
+                    <div className="w-5 h-5 rounded-full bg-[#004A8D] text-white flex items-center justify-center text-xs">
+                      <Check className="w-3.5 h-3.5 text-[#F7941D]" />
                     </div>
                   )}
                 </div>
@@ -94,7 +94,7 @@ export default function DesignPanel({ design, onChange }: DesignPanelProps) {
       {/* 2. COR PRIMÁRIA & PALETA */}
       <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-xs space-y-4">
         <h3 className="text-sm font-bold text-gray-900 flex items-center gap-2">
-          <Palette className="w-4 h-4 text-purple-600" />
+          <Palette className="w-4 h-4 text-[#004A8D]" />
           Cor Primária de Destaque
         </h3>
 
@@ -107,7 +107,7 @@ export default function DesignPanel({ design, onChange }: DesignPanelProps) {
                 type="button"
                 onClick={() => update({ primaryColor: swatch.hex })}
                 className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
-                  isSelected ? 'ring-4 ring-purple-200 scale-110 shadow-sm' : 'hover:scale-105'
+                  isSelected ? 'ring-4 ring-[#004A8D]/30 scale-110 shadow-sm' : 'hover:scale-105'
                 }`}
                 style={{ backgroundColor: swatch.hex }}
                 title={swatch.name}
@@ -132,7 +132,7 @@ export default function DesignPanel({ design, onChange }: DesignPanelProps) {
       {/* 3. TIPOGRAFIA & TAMANHO */}
       <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-xs space-y-4">
         <h3 className="text-sm font-bold text-gray-900 flex items-center gap-2">
-          <Type className="w-4 h-4 text-purple-600" />
+          <Type className="w-4 h-4 text-[#004A8D]" />
           Tipografia & Tamanho da Fonte
         </h3>
 
@@ -145,7 +145,7 @@ export default function DesignPanel({ design, onChange }: DesignPanelProps) {
                   key={f.id}
                   className={`flex items-center justify-between p-3 rounded-xl border cursor-pointer transition-all ${
                     design.fontFamily === f.id
-                      ? 'border-purple-600 bg-purple-50/50 font-bold text-purple-900'
+                      ? 'border-[#004A8D] bg-[#004A8D]/5 font-bold text-[#004A8D]'
                       : 'border-gray-200 hover:bg-gray-50 text-gray-700'
                   }`}
                 >
@@ -155,7 +155,7 @@ export default function DesignPanel({ design, onChange }: DesignPanelProps) {
                     name="fontFamily"
                     checked={design.fontFamily === f.id}
                     onChange={() => update({ fontFamily: f.id })}
-                    className="text-purple-600 focus:ring-purple-500"
+                    className="text-[#004A8D] focus:ring-[#004A8D]"
                   />
                 </label>
               ))}
@@ -167,9 +167,9 @@ export default function DesignPanel({ design, onChange }: DesignPanelProps) {
               <label className="block text-xs font-semibold text-gray-700 mb-2">Tamanho do Texto</label>
               <div className="grid grid-cols-3 gap-2">
                 {[
-                  { id: 'sm', label: 'Pequeno (ATS High-Density)' },
+                  { id: 'sm', label: 'Pequeno (ATS)' },
                   { id: 'md', label: 'Médio (Padrão)' },
-                  { id: 'lg', label: 'Grande (Legibilidade High)' },
+                  { id: 'lg', label: 'Grande' },
                 ].map((s) => (
                   <button
                     key={s.id}
@@ -177,11 +177,11 @@ export default function DesignPanel({ design, onChange }: DesignPanelProps) {
                     onClick={() => update({ fontSize: s.id as ResumeDesign['fontSize'] })}
                     className={`py-2.5 px-2 rounded-xl text-xs font-bold border transition-all ${
                       design.fontSize === s.id
-                        ? 'border-purple-600 bg-purple-600 text-white'
+                        ? 'border-[#004A8D] bg-[#004A8D] text-white'
                         : 'border-gray-200 text-gray-700 hover:bg-gray-50'
                     }`}
                   >
-                    {s.label.split(' ')[0]}
+                    {s.label}
                   </button>
                 ))}
               </div>
@@ -205,7 +205,7 @@ export default function DesignPanel({ design, onChange }: DesignPanelProps) {
                     onClick={() => update({ spacing: sp.id as ResumeDesign['spacing'] })}
                     className={`py-2.5 px-2 rounded-xl text-xs font-bold border transition-all ${
                       design.spacing === sp.id
-                        ? 'border-purple-600 bg-purple-600 text-white'
+                        ? 'border-[#004A8D] bg-[#004A8D] text-white'
                         : 'border-gray-200 text-gray-700 hover:bg-gray-50'
                     }`}
                   >

@@ -1,11 +1,28 @@
-import { X, Sparkles, Target, Zap, CheckCircle2, AlertTriangle, ShieldCheck, FileCheck, ArrowRight, Globe } from 'lucide-react';
-import type { ResumeData } from '../types';
+import {
+  X,
+  Sparkles,
+  Target,
+  Zap,
+  CheckCircle2,
+  AlertTriangle,
+  ShieldCheck,
+  FileCheck,
+  ArrowRight,
+  Globe,
+  FileText,
+  Palette,
+  Eye,
+  ChevronRight,
+} from 'lucide-react';
+import type { ResumeData, TabType } from '../types';
 
-interface AIAssistantDrawerProps {
+interface UnifiedDrawerProps {
   isOpen: boolean;
   onClose: () => void;
   score: number;
   data: ResumeData;
+  activeTab: TabType;
+  onTabChange: (tab: TabType) => void;
   onOpenSynthesis: () => void;
   onOpenStar: () => void;
   onOpenReview: () => void;
@@ -19,18 +36,26 @@ export default function AIAssistantDrawer({
   onClose,
   score,
   data,
+  activeTab,
+  onTabChange,
   onOpenSynthesis,
   onOpenStar,
   onOpenReview,
   onOpenAts,
   onOpenExport,
   onOpenTranslate,
-}: AIAssistantDrawerProps) {
+}: UnifiedDrawerProps) {
   if (!isOpen) return null;
 
-  const scoreColor = score >= 80 ? 'text-emerald-600' : score >= 60 ? 'text-amber-500' : 'text-red-500';
-  const scoreStroke = score >= 80 ? '#10B981' : score >= 60 ? '#F59E0B' : '#EF4444';
+  const scoreColor = score >= 80 ? 'text-emerald-600' : score >= 60 ? 'text-[#F7941D]' : 'text-red-500';
+  const scoreStroke = score >= 80 ? '#10B981' : score >= 60 ? '#F7941D' : '#EF4444';
   const circumference = 2 * Math.PI * 38;
+
+  const tabs: { id: TabType; label: string; icon: React.ReactNode }[] = [
+    { id: 'content', label: 'Conteúdo', icon: <FileText className="w-4 h-4" /> },
+    { id: 'design', label: 'Design & Layout', icon: <Palette className="w-4 h-4" /> },
+    { id: 'preview', label: 'Pré-visualização', icon: <Eye className="w-4 h-4" /> },
+  ];
 
   const recommendations = [
     {
@@ -66,42 +91,85 @@ export default function AIAssistantDrawer({
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden transition-all duration-300">
-      {/* Backdrop */}
+      {/* Backdrop Overlay */}
       <div
-        className="fixed inset-0 bg-gray-900/50 backdrop-blur-xs transition-opacity duration-300"
+        className="fixed inset-0 bg-gray-900/60 backdrop-blur-xs transition-opacity duration-300"
         onClick={onClose}
       />
 
-      <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
+      <div className="fixed inset-y-0 right-0 max-w-full flex pl-6">
         <div className="w-screen max-w-md bg-white shadow-2xl flex flex-col transform transition-transform duration-300 ease-in-out">
-          {/* Drawer Header */}
-          <div className="p-5 bg-gradient-to-r from-purple-900 to-indigo-900 text-white flex items-center justify-between shadow-md">
+          {/* Unified Drawer Header (Senac Blue & Custom Logo) */}
+          <div className="p-4 bg-[#004A8D] text-white flex items-center justify-between shadow-md border-b border-[#004A8D]/20">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-white/10 rounded-xl backdrop-blur-xs">
-                <Sparkles className="w-6 h-6 text-purple-300" />
-              </div>
+              <img
+                src="./logo.png"
+                alt="Logo Currículo Express"
+                className="w-10 h-10 rounded-full border-2 border-[#F7941D] bg-white object-cover shadow-sm"
+              />
               <div>
-                <h2 className="text-base font-bold leading-tight">Central de IA & Análise</h2>
-                <p className="text-xs text-purple-200">Assistentes inteligentes para seu currículo</p>
+                <h2 className="text-base font-extrabold leading-tight flex items-center gap-1.5">
+                  Currículo Express
+                  <span className="bg-[#F7941D] text-white text-[9px] px-1.5 py-0.5 rounded-full font-extrabold">
+                    T.D.S.
+                  </span>
+                </h2>
+                <p className="text-xs text-[#FDC180] font-semibold">
+                  Senac • Menu Único & Central de IA
+                </p>
               </div>
             </div>
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg text-purple-200 hover:text-white hover:bg-white/10 transition-colors"
-              aria-label="Fechar gaveta de IA"
+              className="p-1.5 rounded-xl text-white/80 hover:text-white hover:bg-white/10 transition-colors"
+              aria-label="Fechar menu"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
-          {/* Drawer Body (Scrollable) */}
+          {/* Drawer Body */}
           <div className="flex-1 overflow-y-auto p-5 space-y-6">
-            {/* Widget: Saúde do Currículo */}
-            <div className="bg-gradient-to-br from-gray-50 to-purple-50/30 rounded-2xl p-4 border border-purple-100 shadow-xs">
+            {/* 1. SEÇÃO DE NAVEGAÇÃO EM ABAS */}
+            <div>
+              <div className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2.5 px-1">
+                Navegação da Aplicação
+              </div>
+              <div className="space-y-1.5">
+                {tabs.map(tab => {
+                  const isActive = activeTab === tab.id;
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() => {
+                        onTabChange(tab.id);
+                        onClose();
+                      }}
+                      className={`w-full flex items-center justify-between p-3 rounded-xl text-xs font-bold transition-all ${
+                        isActive
+                          ? 'bg-[#004A8D] text-white shadow-sm'
+                          : 'bg-gray-50 text-gray-700 hover:bg-gray-100 hover:text-[#004A8D]'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <span className={isActive ? 'text-[#F7941D]' : 'text-gray-500'}>
+                          {tab.icon}
+                        </span>
+                        <span>{tab.label}</span>
+                      </div>
+                      {isActive && <ChevronRight className="w-4 h-4 text-[#F7941D]" />}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* 2. SAÚDE DO CURRÍCULO */}
+            <div className="bg-gradient-to-br from-gray-50 to-[#004A8D]/5 rounded-2xl p-4 border border-[#004A8D]/20 shadow-xs">
               <div className="flex items-center gap-4">
                 {/* Score Gauge */}
-                <div className="relative w-22 h-22 shrink-0 flex items-center justify-center">
-                  <svg className="w-22 h-22 -rotate-90" viewBox="0 0 88 88">
+                <div className="relative w-20 h-20 shrink-0 flex items-center justify-center">
+                  <svg className="w-20 h-20 -rotate-90" viewBox="0 0 88 88">
                     <circle cx="44" cy="44" r="38" fill="none" stroke="#E5E7EB" strokeWidth="7" />
                     <circle
                       cx="44"
@@ -117,43 +185,43 @@ export default function AIAssistantDrawer({
                     />
                   </svg>
                   <div className="absolute flex flex-col items-center justify-center">
-                    <span className={`text-xl font-black ${scoreColor}`}>{score}%</span>
-                    <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Score</span>
+                    <span className={`text-lg font-black ${scoreColor}`}>{score}%</span>
+                    <span className="text-[9px] text-gray-500 font-bold uppercase tracking-wider">Score</span>
                   </div>
                 </div>
 
                 <div>
-                  <h3 className="text-sm font-bold text-gray-900">
-                    {score >= 80 ? 'Currículo Alta Compatibilidade' : score >= 60 ? 'Currículo em Evolução' : 'Necessita Melhorias'}
+                  <h3 className="text-xs font-extrabold text-[#004A8D]">
+                    {score >= 80 ? 'Currículo Alta Compatibilidade' : score >= 60 ? 'Currículo em Evolução' : 'Melhorias Recomendadas'}
                   </h3>
-                  <p className="text-xs text-gray-600 mt-1">
+                  <p className="text-[11px] text-gray-600 mt-0.5">
                     {score >= 80
-                      ? 'Seu currículo possui excelente densidade de informações para passar nos filtros ATS.'
-                      : 'Complete as seções recomendadas abaixo para aumentar suas chances de entrevista.'}
+                      ? 'Seu currículo atende aos requisitos ATS.'
+                      : 'Complete as recomendações abaixo para aumentar suas chances.'}
                   </p>
                 </div>
               </div>
 
-              {/* Status checklist */}
-              <div className="mt-4 pt-3 border-t border-purple-100/80 space-y-2">
-                <div className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                  <ShieldCheck className="w-4 h-4 text-purple-600" />
-                  Plano de Ação de Melhoria
+              {/* Action plan */}
+              <div className="mt-3 pt-3 border-t border-gray-200/80 space-y-2">
+                <div className="text-[11px] font-bold text-gray-700 uppercase tracking-wider flex items-center gap-1.5">
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#004A8D]" />
+                  Plano de Ação
                 </div>
 
                 {pendingRecs.length === 0 ? (
-                  <div className="p-3 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-emerald-800 flex items-center gap-2">
+                  <div className="p-2.5 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-emerald-800 flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>Parabéns! Seu currículo atende aos principais critérios recomendados.</span>
+                    <span>Parabéns! Estrutura completa.</span>
                   </div>
                 ) : (
                   pendingRecs.map((rec, idx) => (
                     <div
                       key={idx}
-                      className="p-3 bg-white rounded-xl border border-gray-200 flex items-start justify-between gap-2 shadow-2xs"
+                      className="p-2.5 bg-white rounded-xl border border-gray-200 flex items-center justify-between gap-2 shadow-2xs"
                     >
-                      <div className="flex items-start gap-2 text-xs text-gray-700">
-                        <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                      <div className="flex items-center gap-2 text-xs text-gray-700">
+                        <AlertTriangle className="w-3.5 h-3.5 text-[#F7941D] shrink-0" />
                         <span>{rec.text}</span>
                       </div>
                       {rec.onAction && (
@@ -162,10 +230,10 @@ export default function AIAssistantDrawer({
                             onClose();
                             rec.onAction?.();
                           }}
-                          className="shrink-0 text-[11px] font-bold text-purple-700 bg-purple-50 hover:bg-purple-100 px-2.5 py-1 rounded-lg transition-colors flex items-center gap-1"
+                          className="shrink-0 text-[10px] font-bold text-white bg-[#004A8D] hover:bg-[#00386c] px-2 py-1 rounded-lg transition-colors flex items-center gap-1"
                         >
                           <span>{rec.actionLabel}</span>
-                          <ArrowRight className="w-3 h-3" />
+                          <ArrowRight className="w-3 h-3 text-[#F7941D]" />
                         </button>
                       )}
                     </div>
@@ -174,125 +242,130 @@ export default function AIAssistantDrawer({
               </div>
             </div>
 
-            {/* AI Tools Cards */}
+            {/* 3. FERRAMENTAS INTELIGENTES DE IA */}
             <div>
               <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">
                 Ferramentas Inteligentes de IA
               </h3>
-              <div className="space-y-3">
+              <div className="space-y-2.5">
                 {/* STAR Method Card */}
                 <div
                   onClick={() => { onClose(); onOpenStar(); }}
-                  className="p-4 rounded-xl border border-purple-100 bg-gradient-to-r from-purple-50/50 to-white hover:border-purple-300 hover:shadow-md transition-all cursor-pointer group"
+                  className="p-3.5 rounded-xl border border-[#004A8D]/20 bg-gradient-to-r from-[#004A8D]/5 to-white hover:border-[#004A8D] transition-all cursor-pointer group"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="p-2.5 bg-purple-600 text-white rounded-xl group-hover:scale-105 transition-transform">
-                      <Zap className="w-5 h-5" />
+                    <div className="p-2 bg-[#004A8D] text-white rounded-xl group-hover:scale-105 transition-transform">
+                      <Zap className="w-4 h-4 text-[#F7941D]" />
                     </div>
                     <div className="flex-1">
-                      <div className="text-xs font-bold text-purple-900 group-hover:text-purple-700">
+                      <div className="text-xs font-bold text-[#004A8D]">
                         Assistente STAR para Experiências
                       </div>
-                      <div className="text-[11px] text-gray-600 mt-0.5">
-                        Estruture suas conquistas em Situação, Tarefa, Ação e Resultado.
+                      <div className="text-[11px] text-gray-600">
+                        Situação, Tarefa, Ação e Resultado.
                       </div>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-purple-400 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-4 h-4 text-gray-400 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
 
                 {/* Synthesis AI Card */}
                 <div
                   onClick={() => { onClose(); onOpenSynthesis(); }}
-                  className="p-4 rounded-xl border border-indigo-100 bg-gradient-to-r from-indigo-50/50 to-white hover:border-indigo-300 hover:shadow-md transition-all cursor-pointer group"
+                  className="p-3.5 rounded-xl border border-[#004A8D]/20 bg-gradient-to-r from-[#004A8D]/5 to-white hover:border-[#004A8D] transition-all cursor-pointer group"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="p-2.5 bg-indigo-600 text-white rounded-xl group-hover:scale-105 transition-transform">
-                      <Sparkles className="w-5 h-5" />
+                    <div className="p-2 bg-[#004A8D] text-white rounded-xl group-hover:scale-105 transition-transform">
+                      <Sparkles className="w-4 h-4 text-[#F7941D]" />
                     </div>
                     <div className="flex-1">
-                      <div className="text-xs font-bold text-indigo-900 group-hover:text-indigo-700">
+                      <div className="text-xs font-bold text-[#004A8D]">
                         Gerador de Resumo Profissional
                       </div>
-                      <div className="text-[11px] text-gray-600 mt-0.5">
-                        Crie sínteses de alto impacto adaptadas ao seu perfil.
+                      <div className="text-[11px] text-gray-600">
+                        Crie sínteses de alto impacto.
                       </div>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-indigo-400 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-4 h-4 text-gray-400 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
 
                 {/* ATS Thermometer Card */}
                 <div
                   onClick={() => { onClose(); onOpenAts(); }}
-                  className="p-4 rounded-xl border border-cyan-100 bg-gradient-to-r from-cyan-50/50 to-white hover:border-cyan-300 hover:shadow-md transition-all cursor-pointer group"
+                  className="p-3.5 rounded-xl border border-[#004A8D]/20 bg-gradient-to-r from-[#004A8D]/5 to-white hover:border-[#004A8D] transition-all cursor-pointer group"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="p-2.5 bg-cyan-600 text-white rounded-xl group-hover:scale-105 transition-transform">
-                      <Target className="w-5 h-5" />
+                    <div className="p-2 bg-[#004A8D] text-white rounded-xl group-hover:scale-105 transition-transform">
+                      <Target className="w-4 h-4 text-[#F7941D]" />
                     </div>
                     <div className="flex-1">
-                      <div className="text-xs font-bold text-cyan-900 group-hover:text-cyan-700">
+                      <div className="text-xs font-bold text-[#004A8D]">
                         Termômetro & Otimizador ATS
                       </div>
-                      <div className="text-[11px] text-gray-600 mt-0.5">
-                        Compare seu currículo com a vaga desejada e insira palavras-chave.
+                      <div className="text-[11px] text-gray-600">
+                        Compare seu currículo com a vaga.
                       </div>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-cyan-400 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-4 h-4 text-gray-400 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
 
                 {/* Grammar & Impact Review */}
                 <div
                   onClick={() => { onClose(); onOpenReview(); }}
-                  className="p-4 rounded-xl border border-amber-100 bg-gradient-to-r from-amber-50/50 to-white hover:border-amber-300 hover:shadow-md transition-all cursor-pointer group"
+                  className="p-3.5 rounded-xl border border-[#004A8D]/20 bg-gradient-to-r from-[#004A8D]/5 to-white hover:border-[#004A8D] transition-all cursor-pointer group"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="p-2.5 bg-amber-600 text-white rounded-xl group-hover:scale-105 transition-transform">
-                      <FileCheck className="w-5 h-5" />
+                    <div className="p-2 bg-[#004A8D] text-white rounded-xl group-hover:scale-105 transition-transform">
+                      <FileCheck className="w-4 h-4 text-[#F7941D]" />
                     </div>
                     <div className="flex-1">
-                      <div className="text-xs font-bold text-amber-900 group-hover:text-amber-700">
+                      <div className="text-xs font-bold text-[#004A8D]">
                         Revisor Gramatical & Linguagem
                       </div>
-                      <div className="text-[11px] text-gray-600 mt-0.5">
-                        Detecte erros e substitua palavras fracas por verbos de ação.
+                      <div className="text-[11px] text-gray-600">
+                        Detecte erros e substitua palavras fracas.
                       </div>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-amber-400 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-4 h-4 text-gray-400 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
 
                 {/* Translation Card */}
                 <div
                   onClick={() => { onClose(); onOpenTranslate(); }}
-                  className="p-4 rounded-xl border border-emerald-100 bg-gradient-to-r from-emerald-50/50 to-white hover:border-emerald-300 hover:shadow-md transition-all cursor-pointer group"
+                  className="p-3.5 rounded-xl border border-[#004A8D]/20 bg-gradient-to-r from-[#004A8D]/5 to-white hover:border-[#004A8D] transition-all cursor-pointer group"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="p-2.5 bg-emerald-600 text-white rounded-xl group-hover:scale-105 transition-transform">
-                      <Globe className="w-5 h-5 text-white" />
+                    <div className="p-2 bg-[#004A8D] text-white rounded-xl group-hover:scale-105 transition-transform">
+                      <Globe className="w-4 h-4 text-[#F7941D]" />
                     </div>
                     <div className="flex-1">
-                      <div className="text-xs font-bold text-emerald-900 group-hover:text-emerald-700">
-                        Tradutor Multilíngue (EN / ES / FR / DE)
+                      <div className="text-xs font-bold text-[#004A8D]">
+                        Tradutor Multilíngue (EN/ES/FR/DE)
                       </div>
-                      <div className="text-[11px] text-gray-600 mt-0.5">
-                        Traduza seu currículo para inglês ou espanhol mantendo os termos técnicos.
+                      <div className="text-[11px] text-gray-600">
+                        Traduza mantendo termos técnicos.
                       </div>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-emerald-400 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-4 h-4 text-gray-400 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Drawer Footer */}
+          {/* Drawer Footer (Senac Branding) */}
           <div className="p-4 bg-gray-50 border-t border-gray-200 text-center">
-            <p className="text-[11px] text-gray-500">
-              Curriculinho PRO • PWA Offline Habilitado • Padrão Jobseeker
+            <p className="text-[10px] text-gray-600 font-semibold leading-tight">
+              Desenvolvido Pela Turma Técnica de Desenvolvimento de Sistemas • Senac
             </p>
+            <div className="flex justify-center gap-1.5 mt-1.5">
+              <span className="w-2 h-2 rounded-full bg-[#004A8D]" />
+              <span className="w-2 h-2 rounded-full bg-[#F7941D]" />
+              <span className="w-2 h-2 rounded-full bg-[#FDC180]" />
+            </div>
           </div>
         </div>
       </div>
